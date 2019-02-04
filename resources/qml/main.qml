@@ -12,6 +12,7 @@ ApplicationWindow {
     property string evaluation: "784"
     property color func_color: "#f1f1f1"
     property color mem_color: "#50000000"
+    property bool computed: false
 
 
     signal btn_click(string no)
@@ -26,6 +27,12 @@ ApplicationWindow {
         var stat;
         stat = no
 
+        if(computed) {
+            problem = "0"
+            evaluation = ""
+            computed = false
+        }
+
         if(problem != "0") {
             problem += stat
         } else {
@@ -34,6 +41,13 @@ ApplicationWindow {
     }
 
     onUniClick: {
+
+        if(computed) {
+            problem = "0"
+            evaluation = ""
+            computed = false
+        }
+
         var stat = "<span style='font-family: Segoe MDL2 Assets; font-size: 18px;' > " + code + " </span>"
         if(problem != "0") {
             problem += stat
@@ -352,7 +366,10 @@ ApplicationWindow {
                             txt_color: "white"
                             bg_color: "dodgerblue"
 
-                            onClicked: uniClick(this.text)
+                            onClicked: {
+                                computed = true
+                                compute(problem)
+                            }
 
                         }
 
