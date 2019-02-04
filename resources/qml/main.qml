@@ -33,6 +33,14 @@ ApplicationWindow {
                     Layout.maximumWidth: 480
                     color: "white"
 
+                    Rectangle {
+                        anchors.bottom: parent.bottom
+                        width: parent.width
+                        height: 1
+                        color: "lightgrey"
+
+                    }
+
                     Column {
                         anchors.left: parent.left
 
