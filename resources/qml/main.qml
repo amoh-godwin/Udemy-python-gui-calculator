@@ -8,10 +8,35 @@ ApplicationWindow {
     width: 320
     height: 580
 
-    property string problem: "2x2"
-    property string evaluation: "4%4"
+    property string problem: "0"
+    property string evaluation: "784"
     property color func_color: "#f1f1f1"
     property color mem_color: "#50000000"
+
+
+    signal btn_click(string no)
+
+    signal uniClick(string code)
+
+    onBtn_click: {
+        var stat;
+        stat = no
+
+        if(problem != "0") {
+            problem += stat
+        } else {
+            problem = stat
+        }
+    }
+
+    onUniClick: {
+        var stat = "<span style='font-family: Segoe MDL2 Assets; font-size: 18px;' > " + code + " </span>"
+        if(problem != "0") {
+            problem += stat
+        } else {
+            problem = stat
+        }
+    }
 
     RowLayout {
         anchors.fill: parent
@@ -38,20 +63,27 @@ ApplicationWindow {
                         width: parent.width
                         height: 1
                         color: "lightgrey"
-
                     }
 
-                    Column {
-                        anchors.left: parent.left
+                    ColumnLayout {
+                        anchors.right: parent.right
+                        anchors.verticalCenter: parent.verticalCenter
 
                         Label {
                             text: problem
+                            textFormat: Text.RichText
                             font.family: "Segoe UI Semilight"
+                            font.pixelSize: 42
+                            font.bold: true
                         }
 
                         Label {
+                            Layout.alignment: Qt.AlignRight
                             text: evaluation
                             font.family: "Segoe UI Semilight"
+                            font.pixelSize: 24
+                            font.bold: true
+                            color: mem_color
                         }
 
 
@@ -81,6 +113,8 @@ ApplicationWindow {
                             txt_color: mem_color
                             bg_color: func_color
 
+                            onClicked: btn_click(this.text)
+
                         }
 
                         CalcButton {
@@ -91,6 +125,8 @@ ApplicationWindow {
                             Layout.columnSpan: 1
                             txt_color: mem_color
                             bg_color: func_color
+
+                            onClicked: btn_click(this.text)
 
                         }
 
@@ -103,6 +139,8 @@ ApplicationWindow {
                             txt_color: mem_color
                             bg_color: func_color
 
+                            onClicked: btn_click(this.text)
+
                         }
 
                         CalcButton {
@@ -113,6 +151,8 @@ ApplicationWindow {
                             Layout.columnSpan: 1
                             txt_color: mem_color
                             bg_color: func_color
+
+                            onClicked: btn_click(this.text)
 
                         }
 
@@ -125,6 +165,8 @@ ApplicationWindow {
                             txt_color: "dodgerblue"
                             bg_color: func_color
 
+                            onClicked: btn_click(this.text)
+
                         }
 
                         CalcButton {
@@ -135,6 +177,8 @@ ApplicationWindow {
                             Layout.columnSpan: 1
                             txt_color: "dodgerblue"
                             bg_color: func_color
+
+                            onClicked: uniClick(this.text)
 
                         }
 
@@ -147,6 +191,8 @@ ApplicationWindow {
                             txt_color: "dodgerblue"
                             bg_color: func_color
 
+                            onClicked: uniClick(this.text)
+
                         }
 
                         CalcButton {
@@ -158,6 +204,8 @@ ApplicationWindow {
                             txt_color: "dodgerblue"
                             bg_color: func_color
 
+                            onClicked: uniClick(this.text)
+
                         }
 
                         CalcButton {
@@ -166,6 +214,8 @@ ApplicationWindow {
                             Layout.fillHeight: true
                             Layout.rowSpan: 1
                             Layout.columnSpan: 1
+
+                            onClicked: btn_click(this.text)
 
                         }
 
@@ -176,6 +226,8 @@ ApplicationWindow {
                             Layout.rowSpan: 1
                             Layout.columnSpan: 1
 
+                            onClicked: btn_click(this.text)
+
                         }
 
                         CalcButton {
@@ -184,6 +236,8 @@ ApplicationWindow {
                             Layout.fillHeight: true
                             Layout.rowSpan: 1
                             Layout.columnSpan: 1
+
+                            onClicked: btn_click(this.text)
 
                         }
 
@@ -196,6 +250,8 @@ ApplicationWindow {
                             txt_color: "dodgerblue"
                             bg_color: func_color
 
+                            onClicked: uniClick(this.text)
+
                         }
 
 
@@ -206,6 +262,8 @@ ApplicationWindow {
                             Layout.rowSpan: 1
                             Layout.columnSpan: 1
 
+                            onClicked: btn_click(this.text)
+
                         }
 
                         CalcButton {
@@ -215,6 +273,8 @@ ApplicationWindow {
                             Layout.rowSpan: 1
                             Layout.columnSpan: 1
 
+                            onClicked: btn_click(this.text)
+
                         }
 
                         CalcButton {
@@ -223,6 +283,8 @@ ApplicationWindow {
                             Layout.fillHeight: true
                             Layout.rowSpan: 1
                             Layout.columnSpan: 1
+
+                            onClicked: btn_click(this.text)
 
                         }
 
@@ -235,6 +297,8 @@ ApplicationWindow {
                             txt_color: "dodgerblue"
                             bg_color: func_color
 
+                            onClicked: uniClick(this.text)
+
                         }
 
                         CalcButton {
@@ -243,6 +307,8 @@ ApplicationWindow {
                             Layout.fillHeight: true
                             Layout.rowSpan: 1
                             Layout.columnSpan: 1
+
+                            onClicked: btn_click(this.text)
 
                         }
 
@@ -253,6 +319,8 @@ ApplicationWindow {
                             Layout.rowSpan: 1
                             Layout.columnSpan: 1
 
+                            onClicked: btn_click(this.text)
+
                         }
 
 
@@ -262,6 +330,8 @@ ApplicationWindow {
                             Layout.fillHeight: true
                             Layout.rowSpan: 1
                             Layout.columnSpan: 1
+
+                            onClicked: btn_click(this.text)
 
                         }
 
@@ -274,6 +344,8 @@ ApplicationWindow {
                             txt_color: "white"
                             bg_color: "dodgerblue"
 
+                            onClicked: uniClick(this.text)
+
                         }
 
                         CalcButton {
@@ -282,6 +354,8 @@ ApplicationWindow {
                             Layout.fillHeight: true
                             Layout.rowSpan: 1
                             Layout.columnSpan: 1
+
+                            onClicked: uniClick(this.text)
 
                         }
 
@@ -292,6 +366,8 @@ ApplicationWindow {
                             Layout.rowSpan: 1
                             Layout.columnSpan: 1
 
+                            onClicked: btn_click(this.text)
+
                         }
 
                         CalcButton {
@@ -300,6 +376,8 @@ ApplicationWindow {
                             Layout.fillHeight: true
                             Layout.rowSpan: 1
                             Layout.columnSpan: 1
+
+                            onClicked: btn_click(this.text)
 
                         }
 
