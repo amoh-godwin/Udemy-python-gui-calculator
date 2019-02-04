@@ -16,7 +16,11 @@ ApplicationWindow {
 
     signal btn_click(string no)
 
+    signal mem_click(string mem_str)
+
     signal uniClick(string code)
+
+    signal deleteText(string code)
 
     onBtn_click: {
         var stat;
@@ -36,6 +40,10 @@ ApplicationWindow {
         } else {
             problem = stat
         }
+    }
+
+    onDeleteText: {
+        //
     }
 
     RowLayout {
@@ -113,7 +121,7 @@ ApplicationWindow {
                             txt_color: mem_color
                             bg_color: func_color
 
-                            onClicked: btn_click(this.text)
+                            onClicked: mem_click(this.text)
 
                         }
 
@@ -126,7 +134,7 @@ ApplicationWindow {
                             txt_color: mem_color
                             bg_color: func_color
 
-                            onClicked: btn_click(this.text)
+                            onClicked: mem_click(this.text)
 
                         }
 
@@ -139,7 +147,7 @@ ApplicationWindow {
                             txt_color: mem_color
                             bg_color: func_color
 
-                            onClicked: btn_click(this.text)
+                            onClicked: mem_click(this.text)
 
                         }
 
@@ -152,7 +160,7 @@ ApplicationWindow {
                             txt_color: mem_color
                             bg_color: func_color
 
-                            onClicked: btn_click(this.text)
+                            onClicked: mem_click(this.text)
 
                         }
 
@@ -165,7 +173,7 @@ ApplicationWindow {
                             txt_color: "dodgerblue"
                             bg_color: func_color
 
-                            onClicked: btn_click(this.text)
+                            onClicked: problem = "0"
 
                         }
 
@@ -204,7 +212,7 @@ ApplicationWindow {
                             txt_color: "dodgerblue"
                             bg_color: func_color
 
-                            onClicked: uniClick(this.text)
+                            onClicked: deleteText(this.text)
 
                         }
 
