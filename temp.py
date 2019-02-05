@@ -1,13 +1,15 @@
 from time import sleep
 operators = ['-', '+', '*', '/']
 
-stat = '2*2+2'
+stat = '2+4*1*5'
 
 def solve(s):
     no = 0
+    print(s, 'has entered solve')
     for operator in operators:
-        if operator in stat:
-            splits = stat.split(operator)
+        if operator in s:
+            splits = s.split(operator, 1)
+            print(splits)
             if operator == '-':
                 if len(splits[0]) > 1:
                     left = solve(splits[0])
@@ -23,6 +25,7 @@ def solve(s):
                 return solute
 
             elif operator == '+':
+                print('here for operator +')
                 if len(splits[0]) > 1:
                     left = solve(splits[0])
                     print('left: ', left)
