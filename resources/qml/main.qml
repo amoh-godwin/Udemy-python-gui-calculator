@@ -419,7 +419,7 @@ ApplicationWindow {
 
     }
 
-    Connections: {
+    Connections {
         target: Calculator
 
         onEvaluated: {
