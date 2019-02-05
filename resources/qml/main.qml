@@ -368,7 +368,7 @@ ApplicationWindow {
 
                             onClicked: {
                                 computed = true
-                                compute(problem)
+                                Calculator.compute(problem)
                             }
 
                         }
@@ -415,6 +415,15 @@ ApplicationWindow {
 
             }
 
+        }
+
+    }
+
+    Connections: {
+        target: Calculator
+
+        onEvaluated: {
+            evalution = evaluate
         }
 
     }
