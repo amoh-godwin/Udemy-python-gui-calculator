@@ -8,7 +8,8 @@ ApplicationWindow {
     width: 320
     height: 580
 
-    property string problem: "0"
+    property string screenProblem: "0"
+    property string bg_problem: ""
     property string evaluation: "784"
     property color func_color: "#f1f1f1"
     property color mem_color: "#50000000"
@@ -19,7 +20,7 @@ ApplicationWindow {
 
     signal mem_click(string mem_str)
 
-    signal uniClick(string code)
+    signal uniClick(string code, string repl)
 
     signal deleteText(string code)
 
@@ -28,31 +29,37 @@ ApplicationWindow {
         stat = no
 
         if(computed) {
-            problem = "0"
+            screenProblem = "0"
+            bg_problem = "0"
             evaluation = ""
             computed = false
         }
 
-        if(problem != "0") {
-            problem += stat
+        if(screenProblem != "0") {
+            screenProblem += stat
+            bg_problem += stat
         } else {
-            problem = stat
+            screenProblem = stat
+            bg_problem = stat
         }
     }
 
     onUniClick: {
 
         if(computed) {
-            problem = "0"
+            screenProblem = "0"
+            bg_problem = "0"
             evaluation = ""
             computed = false
         }
 
         var stat = "<span style='font-family: Segoe MDL2 Assets; font-size: 18px;' > " + code + " </span>"
-        if(problem != "0") {
-            problem += stat
+        if(screenProblem != "0") {
+            screenProblem += stat
+            bg_problem += repl
         } else {
-            problem = stat
+            screenProblem = stat
+            bg_problem = repl
         }
     }
 
@@ -92,7 +99,7 @@ ApplicationWindow {
                         anchors.verticalCenter: parent.verticalCenter
 
                         Label {
-                            text: problem
+                            text: screenProblem
                             textFormat: Text.RichText
                             font.family: "Segoe UI Semilight"
                             font.pixelSize: 42
@@ -187,7 +194,7 @@ ApplicationWindow {
                             txt_color: "dodgerblue"
                             bg_color: func_color
 
-                            onClicked: problem = "0"
+                            onClicked: screenProblem = "0"
 
                         }
 
@@ -200,7 +207,7 @@ ApplicationWindow {
                             txt_color: "dodgerblue"
                             bg_color: func_color
 
-                            onClicked: uniClick(this.text)
+                            onClicked: uniClick(this.text, '/')
 
                         }
 
@@ -213,7 +220,7 @@ ApplicationWindow {
                             txt_color: "dodgerblue"
                             bg_color: func_color
 
-                            onClicked: uniClick(this.text)
+                            onClicked: uniClick(this.text, '*')
 
                         }
 
@@ -272,7 +279,7 @@ ApplicationWindow {
                             txt_color: "dodgerblue"
                             bg_color: func_color
 
-                            onClicked: uniClick(this.text)
+                            onClicked: uniClick(this.text, '-')
 
                         }
 
@@ -319,7 +326,7 @@ ApplicationWindow {
                             txt_color: "dodgerblue"
                             bg_color: func_color
 
-                            onClicked: uniClick(this.text)
+                            onClicked: uniClick(this.text, '+')
 
                         }
 
@@ -368,7 +375,7 @@ ApplicationWindow {
 
                             onClicked: {
                                 computed = true
-                                Calculator.compute(problem)
+                                Calculator.compute(bg_problem)
                             }
 
                         }
@@ -380,7 +387,7 @@ ApplicationWindow {
                             Layout.rowSpan: 1
                             Layout.columnSpan: 1
 
-                            onClicked: uniClick(this.text)
+                            onClicked: uniClick(this.text, '%')
 
                         }
 
@@ -423,7 +430,8 @@ ApplicationWindow {
         target: Calculator
 
         onEvaluated: {
-            evalution = evaluate
+            var result = evaluate
+            evaluation = result
         }
 
     }

@@ -16,79 +16,98 @@ class Calculator(QObject):
         comp_thread.daemon = True
         comp_thread.start()
 
-    def evaluate(self, s):
-        """Evaluate the problem and return a solution
+    def _solve(self, p):
+        """Does the real evaluation
         """
 
         operators = ('-', '+', '*', '/')
-        solute = 0.0
+        print(p, ': has come into evaluate')
         for operator in operators:
-            if operator in s:
-                splits = s.split(operator, 1)
+            if operator in p:
+                splits = p.split(operator, 1)
+                print('splits: ', splits)
+                # check if string contains
+                # only numbers
+                left_sp = [o for o in operators if o in splits[0]]
+                right_sp = [p for p in operators if p in splits[1]]
                 if operator == '-':
-                    if len(splits[0]) > 1:
-                        left = self.evaluate(splits[0])
+                    if left_sp:
+                        left = self._solve(splits[0])
                     else:
                         left = splits[0]
 
-                    if len(splits[1]) > 1:
-                        right = self.evaluate(splits[1])
+                    if right_sp:
+                        right = self._solve(splits[1])
                     else:
                         right = splits[1]
 
                     solute = float(left) - float(right)
-                    break
+                    return solute
 
                 elif operator == '+':
-                    if len(splits[0]) > 1:
-                        left = self.evaluate(splits[0])
+                    print('ss: ', len(splits[0]))
+                    if left_sp:
+                        left = self._solve(splits[0])
                     else:
+                        print('ff')
                         left = splits[0]
 
-                    if len(splits[1]) > 1:
-                        right = self.evaluate(splits[1])
+                    if right_sp:
+                        print('gere')
+                        right = self._solve(splits[1])
                     else:
+                        print('wee')
                         right = splits[1]
 
                     solute = float(left) + float(right)
-                    break
+                    return solute
 
                 elif operator == '*':
-                    if len(splits[0]) > 1:
-                        left = self.evaluate(splits[0])
+                    if left_sp:
+                        left = self._solve(splits[0])
                     else:
                         left = splits[0]
 
-                    if len(splits[1]) > 1:
-                        right = self.evaluate(splits[1])
+                    if right_sp:
+                        right = self._solve(splits[1])
                     else:
                         right = splits[1]
 
                     solute = float(left) * float(right)
-                    break
+                    return solute
 
                 elif operator == '/':
-                    if len(splits[0]) > 1:
-                        left = self.evaluate(splits[0])
+                    if left_sp:
+                        left = self._solve(splits[0])
                     else:
                         left = splits[0]
 
-                    if len(splits[1]) > 1:
-                        right = self.evaluate(splits[1])
+                    if right_sp:
+                        right = self._solve(splits[1])
                     else:
                         right = splits[1]
 
                     solute = float(left) / float(right)
-                    break
+                    return solute
 
                 else:
                     pass
             else:
                 pass
+
+    def evaluate(self, s):
+        """Evaluate the problem and return a solution
+        """
+
+        # Run to evalute the statement
+        result = self._solve(s)
+
+        if not result:
+            result = 0.0
         # find if it can be converted to an integer
-        diff = solute - int(solute)
+        diff = result - int(result)
         if diff == 0.0:
-            result = int(solute)
+            final = int(result)
         else:
-            result = solute
-        self.evaluated.emit(str(result))
+            final = result
+        self.evaluated.emit(str(final))
