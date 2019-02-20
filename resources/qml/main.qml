@@ -430,7 +430,7 @@ ApplicationWindow {
         target: Calculator
 
         onEvaluated: {
-            var result = evaluate
+            var result = _compute
             evaluation = result
         }
 

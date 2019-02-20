@@ -9,19 +9,23 @@ class Calculator(QObject):
         QObject.__init__(self)
         self.operators = ('-', '+', '/', '*')
 
-    evaluated = pyqtSignal(str, arguments=["evaluate"])
+    evaluated = pyqtSignal(str, arguments=["_compute"])
 
     @pyqtSlot(str)
     def compute(self, stat):
-        comp_thread = threading.Thread(target=self.evaluate, args=[stat])
+        comp_thread = threading.Thread(target=self._compute, args=[stat])
         comp_thread.daemon = True
         comp_thread.start()
 
-    def _solve(self, p):
+    def _solve(self, pb):
         """Does the real evaluation
         """
 
-        print(p, ': has come into evaluate')
+        print(pb, ': has come into solve')
+        if '%' in pb:
+            p = self.evaluate(pb)
+        else:
+            p = pb
         for operator in self.operators:
             if operator in p:
                 splits = p.split(operator, 1)
@@ -104,7 +108,8 @@ class Calculator(QObject):
                         if right:
                             return float(right)
                         else:
-                            return
+                            # might be bad for multiplication and division
+                            return 0.0
                     if not right:
                         right = '1.0'
 
@@ -117,7 +122,11 @@ class Calculator(QObject):
         else:
             # contains no operator
             print('contains no operator')
-            return p
+            if p:
+                return float(p)
+            else:
+                # might cause trouble for multiplication and division
+                return 0.0
 
     def _perc_calc(self, prob, lf):
         # If percentage, calculate percentage
@@ -153,19 +162,14 @@ class Calculator(QObject):
                 return 0
 
             if right_p:
-                print('right_p: ', right_p)
-                print('right_p: ', right_p)
-                print('right_p: ', right_p)
-                print('right_p: ', right_p)
-                right_sol = self._solve(right_p)
+                pass
             else:
-                right_sol = 0
+                right_p = ''
 
             # get the percentage value
             percent_value = float(left_sol) * float(real_percent) / 100
             # send in the percent with the sign for the final calculation
-            statement = str(left_sol) + sign + str(percent_value) + \
-                str(right_sol)
+            statement = str(left_sol) + sign + str(percent_value) + right_p
             print('statement: ', statement)
             result = self._solve(statement)
             print('result: ', result)
@@ -176,6 +180,12 @@ class Calculator(QObject):
 
         if not result:
             result = 0.0
+        return str(result)
+
+    def _compute(self, problem):
+        # call evaluate to do the evaluation first
+        result = self._solve(problem)
+
         # find if it can be converted to an integer
         diff = result - int(result)
         if diff == 0.0:
