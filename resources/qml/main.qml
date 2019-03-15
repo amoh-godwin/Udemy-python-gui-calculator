@@ -48,9 +48,13 @@ ApplicationWindow {
 
         } else {
             screenProblem = stat
-            bg_problem = stat
+            bg_problem = stat;
 
         }
+        if(scr_lab.width > answer_sheet.width) {
+            flicker.flick(-512, 0)
+        }
+
     }
 
     onUniClick: {
@@ -86,34 +90,77 @@ ApplicationWindow {
         spacing: 0
 
         Rectangle {// screen
-            Layout.alignment: Qt.AlignCenter
             id: answer_sheet
+            Layout.alignment: Qt.AlignCenter
             Layout.fillWidth: true
             Layout.preferredHeight: width > 300 ? 128 : 48
             color: "white"
 
             ColumnLayout {
+                width: parent.width
                 anchors.right: parent.right
                 anchors.rightMargin: 8
                 anchors.verticalCenter: parent.verticalCenter
 
-                Label {
-                    text: screenProblem
-                    textFormat: Text.RichText
-                    font.family: "Segoe UI Semilight"
-                    font.pixelSize: 42
-                    font.bold: true
-                }
-
-                Label {
+                Rectangle {
+                    id: problem_screen
                     Layout.alignment: Qt.AlignRight
-                    text: evaluation
-                    font.family: "Segoe UI Semilight"
-                    font.pixelSize: 24
-                    font.bold: true
-                    color: "dodgerblue"
+                    Layout.preferredWidth: scr_lab.width
+                    Layout.maximumWidth: parent.parent.width
+                    Layout.preferredHeight: 48
+
+                    Flickable {
+                        id: flicker
+                        width: parent.width
+                        height: parent.height
+                        flickableDirection: Flickable.HorizontalFlick
+                        contentWidth: scr_lab.width
+                        contentHeight: scr_lab.height
+                        contentX: 0
+                        contentY: 0
+
+                        Label {
+                            id: scr_lab
+                            leftPadding: 8
+                            text: screenProblem
+                            textFormat: Text.RichText
+                            elide: Text.ElideMiddle
+                            font.family: "Segoe UI Semilight"
+                            font.pixelSize: 42
+                            font.bold: true
+                        }
+
+                    }
                 }
 
+                Rectangle {
+                    Layout.alignment: Qt.AlignRight
+                    Layout.preferredWidth: eval_lab.width
+                    Layout.maximumWidth: parent.parent.width
+                    Layout.preferredHeight: 48
+
+                    Flickable {
+                        width: parent.width
+                        height: parent.height
+                        flickableDirection: Flickable.HorizontalFlick
+                        contentWidth: eval_lab.width
+                        contentHeight: eval_lab.height
+                        contentX: 0
+                        contentY: 0
+
+                        Label {
+                            id: eval_lab
+                            leftPadding: 8
+                            Layout.alignment: Qt.AlignRight
+                            text: evaluation
+                            font.family: "Segoe UI Semilight"
+                            font.pixelSize: 24
+                            font.bold: true
+                            color: "dodgerblue"
+                        }
+
+                    }
+                }
 
             }
 
