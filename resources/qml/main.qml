@@ -168,7 +168,7 @@ ApplicationWindow {
                 anchors.bottom: parent.bottom
                 width: parent.width
                 height: 1
-                color: "lightgrey"
+                color: "#ebebeb"
             }
 
         }
@@ -181,7 +181,7 @@ ApplicationWindow {
             Rectangle {// s size
                 anchors.fill: parent
                 visible: portrait
-                color: "#ccc"
+                color: "#ebebeb"
 
                 GridLayout {
                     anchors.fill: parent
@@ -662,6 +662,7 @@ ApplicationWindow {
                             columns: 3
                             rowSpacing: 1
                             columnSpacing: 1
+
 
                             CalcButton {
                                 text: "7"
